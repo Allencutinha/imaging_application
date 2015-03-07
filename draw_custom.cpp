@@ -4,7 +4,7 @@
 void draw_line(uchar * inBuff, int height, int width,
 	           int x0, int y0, int x1, int y1){
 
-	// make sure that (x0, y0) lie on the upper left corner of (x1, y1)
+    // make sure that (x0, y0) lie on the upper left corner of (x1, y1)
     // calculate slope
     float m = 1000;
     if ((x1 - x0) != 0) {m = float(y1-y0)/float(x1-x0);}
@@ -119,12 +119,12 @@ int draw_custom(cv::Mat &image)
     int x1 = width;
     int y1 = 0;
     
-	draw_line(inBuff, height, width, x0, y0, x1, y1);
-
+    draw_line(inBuff, height, width, x0, y0, x1, y1);
+    
     draw_rectangle(inBuff, height, width, 200, 200, 100, 100, 20);
 
-	cv::namedWindow("line");
-	cv::imshow("line", gray);
+    cv::namedWindow("line");
+    cv::imshow("line", gray);
 
 	return 0;
 }
