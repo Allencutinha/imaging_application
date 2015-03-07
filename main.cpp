@@ -4,6 +4,7 @@
 #include "gaussian_custom.h"
 #include "median_custom.h"
 #include "canny_custom.h"
+#include "draw_custom.h"
 using namespace cv;
 
 void displayErrorLog(){
@@ -18,6 +19,7 @@ void displayErrorLog(){
    std::cout<<"\t\though"<<std::endl;
    std::cout<<"\t\tlsd"<<std::endl;
    std::cout<<"\t\tcircle_det"<<std::endl;
+   std::cout<<"\t\tdraw"<<std::endl;
    std::cout<<"_______________________________________________________"<<std::endl;
 }
 // Main program to call various basic imaging filters
@@ -70,6 +72,11 @@ int main( int argc, char **argv)
    else if (input == "cicrlce_det"){ 
       // circle detector
       std::cout<<"not yet implemented"<<std::endl;
+   }
+   //case "draw"
+    else if (input == "draw"){
+      // circle detector
+      draw_custom(image);
    }
    //default:
    else{
