@@ -1,5 +1,6 @@
 #include "draw_custom.h"
 
+// module to draw line 
 void draw_line(uchar * inBuff, int height, int width,
 	           int x0, int y0, int x1, int y1){
 
@@ -50,6 +51,58 @@ void draw_line(uchar * inBuff, int height, int width,
     }
 
 }
+
+// module to rotate the point location wrt center of rotation
+void rotate_point(int &x, int &y, int xCenterOfRotation, int yCenterOfRotation, float theta){
+     float thetaRad = (theta*3.14)/180.0; 
+     int xRot = cos(thetaRad) * float(x - xCenterOfRotation) - sin(thetaRad) * float(y - yCenterOfRotation) + xCenterOfRotation;
+     int yRot = sin(thetaRad) * float(x - xCenterOfRotation) + cos(thetaRad) * float(y - yCenterOfRotation) + yCenterOfRotation;
+
+     x = xRot;
+     y = yRot;
+}
+
+// module to draw a rectangle
+void draw_rectangle(uchar* inBuff, int height, int width,
+               int x, int y, int rectHeight, int rectWidth, float theta)
+{
+    // vertices are defined clockwise 0->1->2->3->0
+    // vertex 0
+    int x0 = x;
+    int y0 = y;
+    // vertex 1
+    int x1 = x+rectWidth;
+    int y1 = y;
+    //vertex 2
+    int x2 = x+rectWidth;
+    int y2 = y+rectHeight;
+    //vertex 3
+    int x3 = x;
+    int y3 = y+rectHeight;
+
+    if (theta != 0){
+        // rotate the vertices wrt to 0th vertex
+        //rotate_point(x0,y0, x0, y0, theta);
+        rotate_point(x1,y1, x0, y0, theta);
+        rotate_point(x2,y2, x0, y0, theta);
+        rotate_point(x3,y3, x0, y0, theta);
+    }
+     std::cout<<"(x0, y0)"<<x0<<","<<y0<<std::endl;
+     std::cout<<"(x1, y1)"<<x1<<","<<y1<<std::endl;
+     std::cout<<"(x2, y2)"<<x2<<","<<y2<<std::endl;
+     std::cout<<"(x3, y3)"<<x3<<","<<y3<<std::endl;
+    // line from vertex 0->1
+    draw_line(inBuff, height, width, x0, y0, x1, y1);
+    // line from vertex 1->2
+    draw_line(inBuff, height, width, x1, y1, x2, y2);
+    // line from vertex 2->3
+    draw_line(inBuff, height, width, x2, y2, x3, y3);
+    // line from vertex 3->0
+    draw_line(inBuff, height, width, x3, y3, x0, y0);
+
+}
+
+
 int draw_custom(cv::Mat &image)
 {    
 	cv::Mat gray;
@@ -67,6 +120,8 @@ int draw_custom(cv::Mat &image)
     int y1 = 0;
     
 	draw_line(inBuff, height, width, x0, y0, x1, y1);
+
+    draw_rectangle(inBuff, height, width, 200, 200, 100, 100, 20);
 
 	cv::namedWindow("line");
 	cv::imshow("line", gray);
