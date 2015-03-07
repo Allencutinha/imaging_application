@@ -102,7 +102,48 @@ void draw_rectangle(uchar* inBuff, int height, int width,
 
 }
 
-
+void draw_circle(uchar* inBuff, int height, int width, int xCenter, int yCenter, int radius){
+    // r^2 = (x - xc)^2 + (y - yc)^2
+    // y1 = yc + sqrt(radius^2 - (x - xc)^2)
+    // y2 = yc - sqrt(radius^2 - (x - xc)^2)
+    for (int x = (xCenter-radius); x < (xCenter + radius); x++){
+        int y1 = yCenter + sqrt((radius * radius) - (x - xCenter) * (x - xCenter));
+        if ((x >= 0) && (y1 >= 0) && (x < width) && (y1 < height)) {
+            inBuff[y1 * width + x] = 255;
+        }
+        int y2 = yCenter - sqrt((radius * radius) - (x - xCenter) * (x - xCenter));
+        if ((x >= 0) && (y2 >= 0) && (x < width) && (y2 < height)) {
+            inBuff[y2 * width + x] = 255;
+        }
+    }
+    for (int y = (yCenter-radius); y < (yCenter + radius); y++){
+        int x1 = xCenter + sqrt((radius * radius) - (y - yCenter) * (y - yCenter));
+        if ((x1 >= 0) && (y >= 0) && (x1 < width) && (y < height)) {
+            inBuff[y * width + x1] = 255;
+        }
+        int x2 = xCenter - sqrt((radius * radius) - (y - yCenter) * (y - yCenter));
+        
+        if ((x2 >= 0) && (y >= 0) && (x2 < width) && (y < height)) { 
+            inBuff[y * width + x2] = 255;
+        }
+    }
+    
+    
+    #if 0 
+    // x = xCenter + r * cos(theta)
+    // y = yCenter + r * sin(theta)
+    // theoriticlly this makes more sense
+    // need to figure out a better implmentation for larger circles
+    for (float theta = 0; theta< 360; theta++){
+        float thetaRad = (float(theta) * 3.14)/180.0;
+        int x = xCenter + radius * cos (thetaRad);
+        int y = yCenter + radius * sin (thetaRad);
+        if ((x >= 0) && (y >= 0) && (x < width) && (y < height)) {
+            inBuff[y * width + x] = 255;
+        }
+    }
+    #endif
+}
 int draw_custom(cv::Mat &image)
 {    
 	cv::Mat gray;
@@ -122,6 +163,8 @@ int draw_custom(cv::Mat &image)
     draw_line(inBuff, height, width, x0, y0, x1, y1);
     
     draw_rectangle(inBuff, height, width, 200, 200, 100, 100, 20);
+    
+    draw_circle(inBuff, height, width, width/2, height/2, 200);
 
     cv::namedWindow("line");
     cv::imshow("line", gray);
