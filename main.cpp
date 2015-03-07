@@ -3,7 +3,7 @@
 #include "sobel_custom.h"
 #include "gaussian_custom.h"
 #include "median_custom.h"
-
+#include "canny_custom.h"
 using namespace cv;
 
 void displayErrorLog(){
@@ -54,7 +54,7 @@ int main( int argc, char **argv)
    //case "canny":
    else if (input == "canny"){
       // canny
-      std::cout<<"not yet implemented !!!"<<std::endl;
+      canny_custom(image);
    }
    //case "hough":
    else if (input == "hough"){
