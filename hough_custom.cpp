@@ -62,6 +62,21 @@ for(int i = 0; i < numLines; i++ )
 #endif
 
 }
+int im_round(double number)
+{
+    return (number >= 0) ? (int)(number + 0.5) : (int)(number - 0.5);
+}
+// Note accepts theta in radians
+void polarToEucledianLine(int rho, float theta, int &x1, int &y1, int &x2, int &y2){
+    // x = rho cos(theta)
+    // y = rho sin(theta)
+    double a = cos(theta), b = sin(theta);
+    double x0 = a*rho, y0 = b*rho;
+    x1 = im_round(x0 + 1000*(-b));
+    y1 = im_round(y0 + 1000*(a));
+    x2 = im_round(x0 - 1000*(-b));
+    y2 = im_round(y0 - 1000*(a));
+}
 int hough_custom(cv::Mat &image){
     cv::Mat gray;
     cv::Mat grayOut;
