@@ -4,6 +4,7 @@
 #include "gaussian_custom.h"
 #include "median_custom.h"
 #include "canny_custom.h"
+#include "hough_custom.h"
 #include "draw_custom.h"
 using namespace cv;
 
@@ -61,7 +62,7 @@ int main( int argc, char **argv)
    //case "hough":
    else if (input == "hough"){
       // hough transform
-      std::cout<<"not yet implemented !!!"<<std::endl;
+      hough_custom(image);
    }
    //case "lsd":
    else if (input == "lsd"){
