@@ -50,6 +50,7 @@ void gaussian_buffer(uchar* inBuff, uchar* outBuff,
     gaussianKernel = new double [KernelSize * KernelSize];
     createFilter(gaussianKernel, KernelSize, sigma);
     
+    uchar * outBuffTemp = new uchar[height * width * channels];
     int offset = KernelSize/2;
     for (int row = offset; row < height -offset; row++){
         for (int col = offset; col < width-offset; col++){
@@ -60,11 +61,38 @@ void gaussian_buffer(uchar* inBuff, uchar* outBuff,
                         sum += /*inBuff[(col+ c) * channels+ (row + r)  * width* channels + ch];*/inBuff[((col+c) * channels)+ ((row+r) * width * channels)+ ch] * gaussianKernel[(r+offset)*KernelSize+(c+offset)];
                     }
                 }
-                outBuff[col * channels+ row * width * channels+ch] = (uchar)(sum);
+                outBuffTemp[col * channels+ row * width * channels+ch] = (uchar)(sum);
             }
         }
     }
-
+    memcpy(outBuff, outBuffTemp, height * width * channels);
+    delete [] outBuffTemp;
+}
+void gaussian_buffer_int(int* inBuff, int* outBuff,
+                     int KernelSize, double sigma,
+                     int height, int width, int channels)
+{
+    double * gaussianKernel;
+    gaussianKernel = new double [KernelSize * KernelSize];
+    createFilter(gaussianKernel, KernelSize, sigma);
+    
+    int * outBuffTemp = new int[height * width * channels];
+    int offset = KernelSize/2;
+    for (int row = offset; row < height -offset; row++){
+        for (int col = offset; col < width-offset; col++){
+            for (int ch = 0; ch < channels; ch++){
+                double sum = 0;
+                for (int r = -offset; r <= offset; r++){
+                    for (int c = -offset; c <= offset; c++){
+                        sum += /*inBuff[(col+ c) * channels+ (row + r)  * width* channels + ch];*/inBuff[((col+c) * channels)+ ((row+r) * width * channels)+ ch] * gaussianKernel[(r+offset)*KernelSize+(c+offset)];
+                    }
+                }
+                outBuffTemp[col * channels+ row * width * channels+ch] = (sum);
+            }
+        }
+    }
+    memcpy(outBuff, outBuffTemp, height * width * channels * sizeof(int));
+    delete [] outBuffTemp;
 }
 void gaussian_custom(cv::Mat &image)
 {

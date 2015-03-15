@@ -8,6 +8,7 @@ Currently contains following algorithms implemented in c++
 - Sobel edge
 - Canny edge
 - Hough transform
+- Harris Corner detection
 - utility to draw a line
 - utility to draw a circle
 - utility to draw a rectangle with any orientation

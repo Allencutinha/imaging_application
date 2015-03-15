@@ -6,6 +6,7 @@
 #include "canny_custom.h"
 #include "hough_custom.h"
 #include "draw_custom.h"
+#include "hcd_custom.h"
 using namespace cv;
 
 void displayErrorLog(){
@@ -20,6 +21,8 @@ void displayErrorLog(){
    std::cout<<"\t\though"<<std::endl;
    std::cout<<"\t\tlsd"<<std::endl;
    std::cout<<"\t\tcircle_det"<<std::endl;
+   std::cout<<"\t\th_corner_det"<<std::endl;
+   std::cout<<"\t\tcamera_calib"<<std::endl;
    std::cout<<"\t\tdraw"<<std::endl;
    std::cout<<"_______________________________________________________"<<std::endl;
 }
@@ -72,6 +75,14 @@ int main( int argc, char **argv)
    //case "circle_det":
    else if (input == "cicrlce_det"){ 
       // circle detector
+      std::cout<<"not yet implemented"<<std::endl;
+   }
+   else if(input == "h_corner_det"){
+      // corner detecttion
+      harris_corner_det(image);
+   }
+   else if (input == "camera_calib"){
+      // camera calibration
       std::cout<<"not yet implemented"<<std::endl;
    }
    //case "draw"

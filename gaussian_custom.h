@@ -3,3 +3,7 @@
 
 void gaussian_custom(cv::Mat &image);
 int test_filter();
+
+void gaussian_buffer_int(int* inBuff, int* outBuff,
+                     int KernelSize, double sigma,
+                     int height, int width, int channels);
