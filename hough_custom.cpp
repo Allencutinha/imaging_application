@@ -24,7 +24,9 @@ void hough_buffer(uchar * inBuff, int height, int width, sLine* lines, int &numL
         for (int theta = 0; theta<180; theta++){
           double thetaRad = (float(theta) * 3.14)/180.0;
           int r = int (col * cos(thetaRad) + row *  sin(thetaRad));
-          accum[r * THETA_DIM + theta]++;
+          if(r > 0 && r < aHeight){
+            accum[r * THETA_DIM + theta]++;
+          }
         }
       }
     }
@@ -60,6 +62,7 @@ for(int i = 0; i < numLines; i++ )
      //line( cdst, pt1, pt2, Scalar(0,0,255), 3, CV_AA);
   }
 #endif
+delete[] accum;
 
 }
 int im_round(double number)

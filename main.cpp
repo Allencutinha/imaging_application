@@ -29,7 +29,7 @@ void displayErrorLog(){
 // Main program to call various basic imaging filters
 int main( int argc, char **argv)
 {
-   std::cout<<"code entered"<<std::endl;
+   std::cout<<"code entered  with arguments : "<<argv[1]<<"\t"<<argv[2]<<std::endl;
    if (argv[2] == NULL || argv[1] == NULL){
       displayErrorLog();
       return 0;
