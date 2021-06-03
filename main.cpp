@@ -29,11 +29,11 @@ void displayErrorLog(){
 // Main program to call various basic imaging filters
 int main( int argc, char **argv)
 {
-   std::cout<<"code entered  with arguments : "<<argv[1]<<"\t"<<argv[2]<<std::endl;
    if (argv[2] == NULL || argv[1] == NULL){
       displayErrorLog();
       return 0;
    }
+   std::cout<<"code entered  with arguments : "<<argv[1]<<"\t"<<argv[2]<<std::endl;
    // read the input image
    Mat   image = imread( argv[1], CV_LOAD_IMAGE_COLOR );
    
